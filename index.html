@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Ops Scale — Scalable Media & Tech Solutions for Operational Growth
+    </title>
+    <meta
+      name="description"
+      content="Ops Scale builds high‑impact training, safety, and operations media for logistics and industrial teams—designed for compliance, adoption, and measurable performance."
+    />
+    <meta property="og:title" content="Ops Scale" />
+    <meta
+      property="og:description"
+      content="Scalable Media & Tech Solutions for Operational Growth."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/opsscale_og.jpg" />
+    <meta name="theme-color" content="#0a192f" />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      :root {
+        --ink: #034c7f; /* Brand dark navy blue */
+        --ink-2: #0560a5; /* Slightly lighter navy */
+        --accent: #56c0ff; /* Brand light blue accent */
+        --accent-2: #3ea9e6; /* Slightly darker blue accent */
+        --muted: #64748b; /* Slate */
+        --bg: linear-gradient(180deg, #f0f4f8, #ffffff); /* Light gradient background */
+        --card: #ffffff; /* White */
+        --ring: rgba(86, 192, 255, 0.35);
+        --success: #16a34a; /* Green */
+        --warning: #f59e0b; /* Amber */
+        --danger: #ef4444; /* Red */
+        --shadow: 0 10px 25px rgba(10, 25, 47, 0.12),
+          0 3px 8px rgba(10, 25, 47, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial,
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg), url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.15'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3C/g%3E%3C/svg%3E") repeat;
+        background-attachment: fixed;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--accent-2);
+      }
+      .container {
+        width: 100%;
+        max-width: clamp(1200px, 92vw, 1440px);
+        margin-inline: auto;
+        padding: 0 20px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.85rem 1.15rem;
+        border-radius: 14px;
+        font-weight: 650;
+        letter-spacing: 0.2px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #05231f;
+      }
+      .btn-primary:hover {
+        background: var(--accent-2);
+      }
+      .btn-outline {
+        border-color: #cbd5e1;
+        color: var(--ink);
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent-2);
+      }
+      .tag {
+        display: inline-block;
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        background: #e6fffa;
+        color: #065f46;
+        font-weight: 600;
+        font-size: 0.8rem;
+        border: 1px solid #99f6e4;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: saturate(180%) blur(10px);
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 800;
+      }
+      .logo {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent), #aadfff);
+      }
+      .logo span {
+        font-weight: 900;
+        color: #05231f;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.25rem;
+      }
+      .nav-links a {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .mobile-toggle {
+        display: none;
+      }
+      /* Hero */
+      .hero {
+        padding: 64px 0 24px;
+        background: linear-gradient(180deg, #ffffff, #f6fbff);
+      }
+      .hero-grid {
+        display: grid;
+        gap: 32px;
+        grid-template-columns: 1.3fr 1fr;
+        align-items: center;
+      }
+      .eyebrow {
+        color: var(--accent-2);
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+      }
+      h1 {
+        font-size: clamp(1.9rem, 2.8vw, 3rem);
+        line-height: 1.15;
+        margin: 0.45rem 0 1rem;
+      }
+      .lead {
+        font-size: 1.1rem;
+        color: #334155;
+        max-width: 52ch;
+      }
+      .hero-cta {
+        margin-top: 1.2rem;
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .media-card {
+        background: var(--card);
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .media-aspect {
+        position: relative;
+        padding-top: 62%;
+        background: #0b1425;
+      }
+      .media-aspect video,
+      .media-aspect img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .note {
+        margin-top: 0.6rem;
+        color: #64748b;
+        font-size: 0.85rem;
+      }
+      /* Trust */
+      .trust {
+        padding: 22px 0 10px;
+        border-top: 1px dashed #e2e8f0;
+      }
+      .trust-row {
+        display: flex;
+        align-items: center;
+        gap: clamp(18px, 3vw, 36px);
+        flex-wrap: wrap;
+        color: #475569;
+        font-weight: 600;
+      }
+      .trust-row img {
+        height: clamp(26px, 5vw, 44px); /* responsive: 26px on small phones, up to 44px on large screens */
+        opacity: 1;
+      }
+      /* Sections */
+      section {
+        padding: 64px 0;
+      }
+      h2 {
+        font-size: clamp(1.4rem, 2.1vw, 2rem);
+        margin: 0 0 18px;
+      }
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+      .card h3 {
+        margin: 0 0 0.25rem;
+        font-size: 1.05rem;
+      }
+      .card p {
+        margin: 0.2rem 0 0;
+        color: #475569;
+      }
+      .kpi {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .kpi strong {
+        font-size: 1.25rem;
+      }
+      /* Case Studies */
+      .case {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 22px;
+        align-items: center;
+      }
+      .case .thumb {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        box-shadow: var(--shadow);
+      }
+      .case .meta {
+        color: #475569;
+      }
+      .chip {
+        display: inline-flex;
+        gap: 0.4rem;
+        align-items: center;
+        padding: 0.35rem 0.55rem;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #3730a3;
+        font-weight: 700;
+        font-size: 0.75rem;
+      }
+      /* CTA Banner */
+      .cta {
+        background: linear-gradient(135deg, #0a192f, #122b53);
+        color: white;
+        border-radius: 20px;
+        padding: 28px;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        gap: 22px;
+      }
+      .cta .actions {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+      /* Footer */
+      footer {
+        padding: 32px 0;
+        border-top: 1px solid #e2e8f0;
+        color: #475569;
+      }
+      .cols {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 22px;
+      }
+      .cols h4 {
+        margin: 0.1rem 0 0.6rem;
+      }
+      .muted {
+        color: #64748b;
+      }
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .case {
+          grid-template-columns: 1fr;
+        }
+        .cta {
+          grid-template-columns: 1fr;
+        }
+        .cols {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+        .mobile-toggle {
+          display: inline-flex;
+        }
+        .cols {
+          grid-template-columns: 1fr;
+        }
+        .trust-row img { height: 28px; }
+      }
+      /* Small helpers */
+      .icon {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+      }
+      .divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 12px 0;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .list {
+        padding-left: 1rem;
+        margin: 0;
+      }
+      .list li {
+        margin: 0.35rem 0;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container nav" role="navigation" aria-label="Primary">
+        <a class="brand" href="#top" aria-label="Ops Scale Home">
+          <img src="/logos/2OFCOpsScaleLogo.svg" alt="Ops Scale logo icon" style="height:40px; width:auto;" />
+          <div>
+            <div style="font-size: 1rem; line-height: 1"></div>
+            <div class="muted" style="font-size: 0.8rem; line-height: 1">Media • Tech • Operations</div>
+          </div>
+        </a>
+        <nav class="nav-links" aria-label="Site">
+          <a href="#services">Services</a>
+          <a href="#industries">Industries</a>
+          <a href="#work">Case Studies</a>
+          <a href="#approach">Approach</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button
+          id="mobileBtn"
+          class="mobile-toggle btn btn-outline"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          Menu
+        </button>
+      </div>
+      <div id="mobileMenu" class="container" hidden>
+        <nav
+          class="card"
+          style="margin: 10px 0; padding: 12px"
+          aria-label="Mobile"
+        >
+          <a href="#services">Services</a> ·
+          <a href="#industries">Industries</a> ·
+          <a href="#work">Case Studies</a> · <a href="#approach">Approach</a> ·
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="eyebrow">
+              Scalable Media & Tech Solutions for Operational Growth
+            </div>
+            <h1>
+              Training & Safety Content that
+              <span
+                style="
+                  background: linear-gradient(90deg, var(--accent), #8af0e5);
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  color: transparent;
+                "
+                >moves the metrics</span
+              >
+              that matter.
+            </h1>
+            <p class="lead">
+              We design, film, and deploy clear, role‑based training and safety
+              media for logistics and industrial workforces. Faster onboarding,
+              fewer incidents, and standardized best practices across sites.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#contact">Book an Intro Call</a>
+              <a class="btn btn-outline" href="#work">See Case Studies</a>
+            </div>
+            <p class="note">
+              Preferred retainers: <strong>$20k+/mo</strong> for multi‑site
+              programs. Detroit‑based • Nationwide production.
+            </p>
+            <div class="pill-row" aria-label="Highlights">
+              <span class="tag">LMS‑ready</span>
+              <span class="tag">Multi‑language</span>
+              <span class="tag">AR/XR optional</span>
+              <span class="tag">SOP & Compliance</span>
+            </div>
+          </div>
+          <div class="media-card">
+            <div class="media-aspect">
+              <!-- Replace the source below with your own poster/demo reel. Small, not full-screen. -->
+              <video
+                playsinline
+                muted
+                autoplay
+                loop
+                poster="/poster.jpg"
+                aria-label="Ops Scale demo reel"
+              >
+                <source src="/opsscale_demo.mp4" type="video/mp4" />
+                <img alt="Ops Scale work montage" src="/poster.jpg" />
+              </video>
+            </div>
+          </div>
+        </div>
+        <div class="container trust" aria-label="Trusted by">
+          <div class="trust-row">
+            <span class="muted">Trusted experience with teams at</span>
+            <!-- Swap placeholders with real logos you have permission to show -->
+            <img src="/logos/homedepot.png" alt="The Home Depot" />
+            <img src="/logos/amazon.png" alt="Amazon" />
+            <img src="/logos/JetBlue.jpg" alt="JetBlue" />
+            <img src="/logos/CDC.png" alt="CDC" />
+            <span class="muted">and others</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section id="services">
+        <div class="container">
+          <h2>What we deliver</h2>
+          <div class="grid grid-3">
+            <div class="card">
+              <h3>Training & Safety Modules</h3>
+              <p>
+                On‑the‑floor procedures, equipment startup/shutdown, hazard ID,
+                and incident response. Built for adoption and repetition.
+              </p>
+              <ul class="list">
+                <li>Multi‑language voiceover & captions</li>
+                <li>Role‑based cuts for associates, leads, contractors</li>
+                <li>LMS export (SCORM/xAPI handoff)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Filming & Post at Scale</h3>
+              <p>
+                Lean, safety‑cleared crews that respect production windows and
+                floor rules. Fast turnaround, secure review links.
+              </p>
+              <ul class="list">
+                <li>Multi‑site & multi‑shift coverage</li>
+                <li>Color‑accurate, brand‑safe graphics</li>
+                <li>Versioning for markets & vendors</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Tech‑Enabled Delivery</h3>
+              <p>
+                From QR‑based access and micro‑learning to optional AR/XR job
+                aids that reduce ramp time.
+              </p>
+              <ul class="list">
+                <li>QR/SOP libraries & kiosks</li>
+                <li>Web & mobile portals</li>
+                <li>AR overlays for step‑by‑step tasks</li>
+              </ul>
+            </div>
+          </div>
+          <div class="grid grid-3" style="margin-top: 16px">
+            <div class="card kpi">
+              <strong>35–60%</strong> reduction in time‑to‑competency (typical
+              target)
+            </div>
+            <div class="card kpi">
+              <strong>↓ Incident Rate</strong> via clearer, visual SOPs
+            </div>
+            <div class="card kpi">
+              <strong>↑ Consistency</strong> across vendors & sites
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Industries -->
+      <section
+        id="industries"
+        style="
+          background: #fff;
+          border-top: 1px solid #e2e8f0;
+          border-bottom: 1px solid #e2e8f0;
+        "
+      >
+        <div class="container">
+          <h2>Built for logistics & industrial operations</h2>
+          <div class="grid grid-3">
+            <div class="card">
+              <h3>Warehousing & 3PL</h3>
+              <p>
+                Inbound, picking, packing, shipping, returns, VAS, PIT, and yard
+                safety.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Manufacturing</h3>
+              <p>
+                Cell operations, line changeovers, quality checks, LOTO, and
+                maintenance.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Construction & Field</h3>
+              <p>
+                Jobsite orientation, subcontractor onboarding, tool & equipment
+                training.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Case Studies / Work -->
+      <section id="work">
+        <div class="container">
+          <h2>Recent work & outcomes</h2>
+          <article class="case">
+            <div class="thumb">
+              <img
+                src="/cases/amazonwarehouse.jpg"
+                alt="Warehouse training session"
+                style="width: 100%; display: block"
+              />
+            </div>
+            <div>
+              <span class="chip">3PL Training Program</span>
+              <h3>
+                Standardized training across 5 sites reduced onboarding time by
+                42%
+              </h3>
+              <p class="meta">
+                We produced 28 short modules (English/Spanish) for inbound, PIT,
+                and safety. Delivered LMS‑ready files and QR quick‑look guides
+                at workstations.
+              </p>
+              <div class="pill-row">
+                <span class="tag">English/Spanish</span>
+                <span class="tag">QR job aids</span>
+                <span class="tag">SCORM/xAPI handoff</span>
+              </div>
+            </div>
+          </article>
+          <div class="divider"></div>
+          <article class="case">
+            <div class="thumb">
+              <img
+                src="/cases/manufacturing.jpg"
+                alt="Manufacturing line"
+                style="width: 100%; display: block"
+              />
+            </div>
+            <div>
+              <span class="chip">Manufacturing Line Changeover</span>
+              <h3>First‑pass yield improved 9% after visual SOP rollout</h3>
+              <p class="meta">
+                Filmed step‑by‑step procedures with color‑coded callouts and
+                safety checkpoints. Versioned content by role.
+              </p>
+              <div class="pill-row">
+                <span class="tag">Role‑based edits</span>
+                <span class="tag">Safety checkpoints</span>
+                <span class="tag">Brand‑safe graphics</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Approach -->
+      <section
+        id="approach"
+        style="
+          background: #fff;
+          border-top: 1px solid #e2e8f0;
+          border-bottom: 1px solid #e2e8f0;
+        "
+      >
+        <div class="container">
+          <h2>How we work</h2>
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>01. Discovery & Safety</h3>
+              <p>
+                We align on KPIs, audiences, and compliance constraints. We
+                complete vendor onboarding and floor safety clearances.
+              </p>
+            </div>
+            <div class="card">
+              <h3>02. Rapid Field Capture</h3>
+              <p>
+                Small, efficient crews minimize disruption. We film during
+                windows you approve and respect all PPE and site rules.
+              </p>
+            </div>
+            <div class="card">
+              <h3>03. Edit, Review, Localize</h3>
+              <p>
+                Secure review links and versioning for roles and regions.
+                Optional captions and voiceovers in multiple languages.
+              </p>
+            </div>
+            <div class="card">
+              <h3>04. Deploy & Measure</h3>
+              <p>
+                We package for your LMS or portal, add QR job aids, and support
+                rollout. We iterate against your incident and ramp KPIs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Enterprise CTA -->
+      <section class="container">
+        <div class="cta">
+          <div>
+            <h3 style="margin: 0 0 0.3rem">
+              Retainer programs for multi‑site ops
+            </h3>
+            <p class="muted" style="margin: 0">
+              Ideal for logistics, manufacturing, and field services with
+              ongoing training & safety needs. Starting at
+              <strong>$20,000/mo</strong>.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="#contact">Request a Scope</a>
+            <a
+              class="btn btn-outline"
+              href="mailto:brandontstephens25@gmail.com?subject=Ops%20Scale%20—%20Retainer%20Inquiry&body=Hi%20Ops%20Scale,%0D%0AWe%27re%20interested%20in%20a%20retainer.%20Our%20sites:%20...%20Target%20KPIs:%20..."
+              aria-label="Email Ops Scale"
+              >Email Us</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <div class="container">
+          <h2>Contact</h2>
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Start a project</h3>
+              <p class="muted">
+                Tell us about your sites, workforce, and KPIs. We’ll propose a
+                scope and timeline within 2 business days.
+              </p>
+              <form
+                id="contactForm"
+                class="grid"
+                style="gap: 10px"
+                aria-label="Contact form"
+              >
+                <label class="sr-only" aria-hidden="true">
+                  <span class="sr-only">Company</span>
+                  <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; height:0; width:0;" />
+                </label>
+                <label>
+                  <span class="sr-only">Name</span>
+                  <input
+                    required
+                    name="name"
+                    placeholder="Your name"
+                    style="
+                      width: 100%;
+                      padding: 12px 14px;
+                      border-radius: 12px;
+                      border: 1px solid #cbd5e1;
+                    "
+                  />
+                </label>
+                <label>
+                  <span class="sr-only">Work Email</span>
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    placeholder="Work email"
+                    style="
+                      width: 100%;
+                      padding: 12px 14px;
+                      border-radius: 12px;
+                      border: 1px solid #cbd5e1;
+                    "
+                  />
+                </label>
+                <label>
+                  <span class="sr-only">Message</span>
+                  <textarea
+                    required
+                    name="message"
+                    placeholder="Briefly describe your operations, number of sites, and training priorities"
+                    rows="4"
+                    style="
+                      width: 100%;
+                      padding: 12px 14px;
+                      border-radius: 12px;
+                      border: 1px solid #cbd5e1;
+                    "
+                  ></textarea>
+                </label>
+                <button class="btn btn-primary" type="submit">Send</button>
+                <div id="contactStatus" class="muted" role="status" aria-live="polite" style="min-height:1.2em"></div>
+                <small class="muted"
+                  >Or email
+                  <a href="mailto:brandontstephens25@gmail.com"
+                    >brandontstephens25@gmail.com</a
+                  ></small
+                >
+              </form>
+            </div>
+            <div class="card">
+              <h3>Procurement & Vendor Info</h3>
+              <ul class="list">
+                <li>Atlanta, GA • Nationwide production</li>
+                <li>Certificate of Insurance available</li>
+                <li>W‑9 & vendor onboarding upon request</li>
+                <li>Secure NDA and data handling</li>
+              </ul>
+              <div class="divider"></div>
+              <h4>Capabilities</h4>
+              <div class="pill-row">
+                <span class="tag">Filming on active floors</span>
+                <span class="tag">SOP libraries</span>
+                <span class="tag">SCORM/xAPI</span>
+                <span class="tag">Localization</span>
+                <span class="tag">AR/XR job aids</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container cols">
+        <div>
+          <div class="brand">
+            <div class="logo" aria-hidden="true"><span>OS</span></div>
+            <strong>Ops Scale</strong>
+          </div>
+          <p class="muted">
+            Scalable media & technology for training, safety, and operational
+            excellence.
+          </p>
+          <p class="muted">
+            © <span id="year"></span> Ops Scale. All rights reserved.
+          </p>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="#services">Services</a><br />
+          <a href="#work">Case Studies</a><br />
+          <a href="#approach">Approach</a>
+        </div>
+        <div>
+          <h4>Industries</h4>
+          <a href="#industries">Logistics & 3PL</a><br />
+          <a href="#industries">Manufacturing</a><br />
+          <a href="#industries">Construction & Field</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="mailto:brandontstephens25@gmail.com">Email</a><br />
+          <a href="tel:+14048319384">+1 (404) 831‑9384</a><br />
+          <a href="https://opsscale.tech" target="_blank" rel="noopener"
+            >opsscale.tech</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const btn = document.getElementById("mobileBtn");
+      const menu = document.getElementById("mobileMenu");
+      btn?.addEventListener("click", () => {
+        const open = menu.hasAttribute("hidden") ? false : true;
+        if (open) {
+          menu.setAttribute("hidden", "");
+          btn.setAttribute("aria-expanded", "false");
+        } else {
+          menu.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+
+      // Contact form -> POST to backend and show status
+      (function(){
+        const form = document.getElementById('contactForm');
+        const statusEl = document.getElementById('contactStatus');
+        if(!form) return;
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          statusEl.textContent = '';
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const data = new FormData(form);
+
+          const payload = {
+            name: String(data.get('name')||'').trim(),
+            email: String(data.get('email')||'').trim(),
+            message: String(data.get('message')||'').trim(),
+            company: String(data.get('company')||'').trim() // honeypot
+          };
+
+          if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+          try {
+            const res = await fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            const json = await res.json().catch(() => ({}));
+            if(res.ok && json && json.success){
+              statusEl.textContent = 'Thanks — your message was sent.';
+              form.reset();
+            } else {
+              statusEl.textContent = 'Something went wrong. Please try again or email us.';
+            }
+          } catch (err){
+            statusEl.textContent = 'Network error. Please try again or email us.';
+          } finally {
+            if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = 'Send'; }
+          }
+        });
+      })();
+
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
