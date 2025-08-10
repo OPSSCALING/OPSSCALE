@@ -75,8 +75,8 @@ function checkEnv({ hasUploadRoute }) {
 
 checkEnv({ hasUploadRoute: Boolean(uploadRoute) });
 
-// Serve static assets from the server folder (adjust if you move files)
-app.use(express.static(path.join(__dirname)));
+// Serve static assets from /public (HTML/CSS/JS live here)
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = Number(process.env.PORT || 3000);
 
@@ -160,7 +160,10 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-app.get('/', (_req, res) => res.send('Ops Scale API running'));
+// Serve your landing page at the root
+app.get('/', (_req, res) =>
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+);
 app.get('/health', (_req, res) =>
   res.json({ ok: true, db: dbReady, mail: Boolean(transporter) })
 );

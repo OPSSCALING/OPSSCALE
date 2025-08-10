@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1533.87 1061.45">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #034c7f;
+        font-size: 487.73px;
+      }
+
+      .cls-1, .cls-2 {
+        font-family: HelveticaNeue-Bold, 'Helvetica Neue';
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-4, .cls-2 {
+        fill: #56c0ff;
+      }
+
+      .cls-2 {
+        font-size: 462.57px;
+      }
+    </style>
+  </defs>
+  <g id="OFC_LOGO" data-name="OFC LOGO">
+    <g>
+      <text class="cls-1" transform="translate(29.96 417.98)"><tspan x="0" y="0">Ops</tspan></text>
+      <rect class="cls-3" x="393.19" y="487.94" width="205.16" height="81.29"/>
+    </g>
+    <text class="cls-2" transform="translate(0 838.95)"><tspan x="0" y="0">SCALE</tspan></text>
+  </g>
+  <path class="cls-4" d="M181.65,185.57l96.83,55.3c3.22,1.84,3.22,6.48,0,8.32l-96.83,55.3c-3.19,1.82-7.16-.48-7.16-4.16v-110.61c0-3.68,3.97-5.98,7.16-4.16Z"/>
+</svg>
