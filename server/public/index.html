@@ -18,7 +18,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/opsscale_og.jpg" />
     <meta name="theme-color" content="#0a192f" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="logos/favicon.ico" />
     <style>
       :root {
         --ink: #034c7f; /* Brand dark navy blue */
@@ -26,7 +26,11 @@
         --accent: #56c0ff; /* Brand light blue accent */
         --accent-2: #3ea9e6; /* Slightly darker blue accent */
         --muted: #64748b; /* Slate */
-        --bg: linear-gradient(180deg, #f0f4f8, #ffffff); /* Light gradient background */
+        --bg: linear-gradient(
+          180deg,
+          #f0f4f8,
+          #ffffff
+        ); /* Light gradient background */
         --card: #ffffff; /* White */
         --ring: rgba(86, 192, 255, 0.35);
         --success: #16a34a; /* Green */
@@ -47,7 +51,9 @@
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial,
           sans-serif;
         color: var(--ink);
-        background: var(--bg), url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.15'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3C/g%3E%3C/svg%3E") repeat;
+        background: var(--bg),
+          url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.15'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3C/g%3E%3C/svg%3E")
+            repeat;
         background-attachment: fixed;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
@@ -218,7 +224,11 @@
         font-weight: 600;
       }
       .trust-row img {
-        height: clamp(26px, 5vw, 44px); /* responsive: 26px on small phones, up to 44px on large screens */
+        height: clamp(
+          26px,
+          5vw,
+          44px
+        ); /* responsive: 26px on small phones, up to 44px on large screens */
         opacity: 1;
       }
       /* Sections */
@@ -353,7 +363,9 @@
         .cols {
           grid-template-columns: 1fr;
         }
-        .trust-row img { height: 28px; }
+        .trust-row img {
+          height: 28px;
+        }
       }
       /* Small helpers */
       .icon {
@@ -396,10 +408,16 @@
     <header>
       <div class="container nav" role="navigation" aria-label="Primary">
         <a class="brand" href="#top" aria-label="Ops Scale Home">
-          <img src="/logos/2OFCOpsScaleLogo.svg" alt="Ops Scale logo icon" style="height:40px; width:auto;" />
+          <img
+            src="/logos/2OFCOpsScaleLogo.svg"
+            alt="Ops Scale logo icon"
+            style="height: 40px; width: auto"
+          />
           <div>
             <div style="font-size: 1rem; line-height: 1"></div>
-            <div class="muted" style="font-size: 0.8rem; line-height: 1">Media • Tech • Operations</div>
+            <div class="muted" style="font-size: 0.8rem; line-height: 1">
+              Media • Tech • Operations
+            </div>
           </div>
         </a>
         <nav class="nav-links" aria-label="Site">
@@ -484,7 +502,7 @@
                 poster="/poster.jpg"
                 aria-label="Ops Scale demo reel"
               >
-                <source src="/opsscale_demo.mp4" type="video/mp4" />
+                <source src="videos/OSMREEL.mp4" type="video/mp4" />
                 <img alt="Ops Scale work montage" src="/poster.jpg" />
               </video>
             </div>
@@ -741,7 +759,19 @@
               >
                 <label class="sr-only" aria-hidden="true">
                   <span class="sr-only">Company</span>
-                  <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; height:0; width:0;" />
+                  <input
+                    type="text"
+                    name="company"
+                    tabindex="-1"
+                    autocomplete="off"
+                    style="
+                      position: absolute;
+                      left: -9999px;
+                      opacity: 0;
+                      height: 0;
+                      width: 0;
+                    "
+                  />
                 </label>
                 <label>
                   <span class="sr-only">Name</span>
@@ -788,7 +818,13 @@
                   ></textarea>
                 </label>
                 <button class="btn btn-primary" type="submit">Send</button>
-                <div id="contactStatus" class="muted" role="status" aria-live="polite" style="min-height:1.2em"></div>
+                <div
+                  id="contactStatus"
+                  class="muted"
+                  role="status"
+                  aria-live="polite"
+                  style="min-height: 1.2em"
+                ></div>
                 <small class="muted"
                   >Or email
                   <a href="mailto:brandontstephens25@gmail.com"
@@ -874,42 +910,50 @@
       });
 
       // Contact form -> POST to backend and show status
-      (function(){
-        const form = document.getElementById('contactForm');
-        const statusEl = document.getElementById('contactStatus');
-        if(!form) return;
-        form.addEventListener('submit', async (e) => {
+      (function () {
+        const form = document.getElementById("contactForm");
+        const statusEl = document.getElementById("contactStatus");
+        if (!form) return;
+        form.addEventListener("submit", async (e) => {
           e.preventDefault();
-          statusEl.textContent = '';
+          statusEl.textContent = "";
           const submitBtn = form.querySelector('button[type="submit"]');
           const data = new FormData(form);
 
           const payload = {
-            name: String(data.get('name')||'').trim(),
-            email: String(data.get('email')||'').trim(),
-            message: String(data.get('message')||'').trim(),
-            company: String(data.get('company')||'').trim() // honeypot
+            name: String(data.get("name") || "").trim(),
+            email: String(data.get("email") || "").trim(),
+            message: String(data.get("message") || "").trim(),
+            company: String(data.get("company") || "").trim(), // honeypot
           };
 
-          if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Sending…";
+          }
 
           try {
-            const res = await fetch('/api/contact', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
+            const res = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
             });
             const json = await res.json().catch(() => ({}));
-            if(res.ok && json && json.success){
-              statusEl.textContent = 'Thanks — your message was sent.';
+            if (res.ok && json && json.success) {
+              statusEl.textContent = "Thanks — your message was sent.";
               form.reset();
             } else {
-              statusEl.textContent = 'Something went wrong. Please try again or email us.';
+              statusEl.textContent =
+                "Something went wrong. Please try again or email us.";
             }
-          } catch (err){
-            statusEl.textContent = 'Network error. Please try again or email us.';
+          } catch (err) {
+            statusEl.textContent =
+              "Network error. Please try again or email us.";
           } finally {
-            if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = 'Send'; }
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Send";
+            }
           }
         });
       })();
