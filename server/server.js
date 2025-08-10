@@ -5,10 +5,14 @@ const path = require('path');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 
-// load env from server/.env
-const envPath = path.join(__dirname, '.env');
-require('dotenv').config({ path: envPath });
-console.log(`[env] loaded ${envPath}`);
+// Load env only in development (Render/production uses dashboard env vars)
+if (process.env.NODE_ENV !== 'production') {
+  const envPath = path.join(__dirname, '.env');
+  require('dotenv').config({ path: envPath });
+  console.log(`[env] loaded ${envPath}`);
+} else {
+  console.log('[env] Production mode — using environment variables from host (Render, etc.)');
+}
 
 const app = express();
 app.use(cors());
