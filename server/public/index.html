@@ -440,31 +440,38 @@
 
       @media (max-width: 960px) {
         /* Make header wrap and keep the menu visible on mobile */
-        .site-header .bar { height: auto; padding: 8px 0; flex-wrap: wrap; align-items: flex-start; }
+        .site-header .bar { height: auto; padding: 6px 0 2px; flex-wrap: wrap; align-items: center; }
 
         /* Show the nav inline as a horizontal, scrollable pill row */
         .primary-nav {
-          display: flex; /* keep visible on mobile */
-          order: 2; /* place below brand */
+          display: flex; /* visible on mobile */
+          order: 2; /* below brand */
           width: 100%;
-          gap: .75rem;
-          padding: 8px 0 10px;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: thin;
+          gap: .5rem;
+          padding: 6px 0 8px;
+          flex-wrap: wrap;          /* allow wrapping instead of horizontal scroll */
+          overflow: visible;        /* no horizontal scroll */
         }
         .primary-nav a {
           display: inline-block;
-          padding: 6px 10px;
+          padding: 5px 10px;         /* smaller pill */
+          font-size: .92rem;         /* slightly smaller text */
           border: 1px solid #e2e8f0;
           border-radius: 999px;
           background: #fff;
           white-space: nowrap;
         }
+        .site-header .brand-wrap img { height: 28px; width: auto; }
+        .site-header .brand-eyebrow { display: none; } /* hide small strapline to save space */
 
         /* Hide hamburger/drawer on small screens since nav is visible */
         .hamburger { display: none; }
         #drawer, #backdrop { display: none !important; }
+      }
+
+      @media (max-width: 420px) {
+        .primary-nav a { padding: 4px 9px; font-size: .88rem; }
+        .container { padding: 0 14px; }
       }
     </style>
   </head>
