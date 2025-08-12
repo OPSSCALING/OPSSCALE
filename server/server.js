@@ -24,12 +24,16 @@ if (process.env.SENDGRID_SMTP_PASS) {
   transporter = nodemailer.createTransport({
     host: process.env.SENDGRID_SMTP_HOST || 'smtp.sendgrid.net',
     port: Number(process.env.SENDGRID_SMTP_PORT || 587),
-    secure: false,
+    secure: String(process.env.SENDGRID_SMTP_PORT || '587') === '465',
     auth: {
       user: process.env.SENDGRID_SMTP_USER || 'apikey',
       pass: process.env.SENDGRID_SMTP_PASS
     }
   });
+  console.log('[mail] SMTP transporter ready (host=%s port=%s secure=%s)',
+    process.env.SENDGRID_SMTP_HOST || 'smtp.sendgrid.net',
+    String(process.env.SENDGRID_SMTP_PORT || 587),
+    String(process.env.SENDGRID_SMTP_PORT || '587') === '465');
 } else {
   console.warn('[mail] SENDGRID_SMTP_PASS not set — email notifications disabled');
 }
@@ -132,6 +136,7 @@ app.post('/api/contact', async (req, res) => {
     }
 
     // Email if mail is available
+    let mailed = false;
     if (transporter) {
       const mailFrom = process.env.MAIL_FROM || 'Ops Scale <noreply@opsscale.tech>';
       const mailTo = process.env.MAIL_TO || 'you@example.com';
@@ -144,16 +149,22 @@ app.post('/api/contact', async (req, res) => {
           <div style="white-space:pre-wrap;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px">${cleaned.message}</div>
           ${id ? `<p style="margin:12px 0 0;color:#475569">Saved as #${id}</p>` : ''}
         </div>`;
-      await transporter.sendMail({
-        from: mailFrom,
-        to: mailTo,
-        subject: `Ops Scale — New Inquiry from ${cleaned.name}`,
-        replyTo: cleaned.email,
-        html
-      });
+      try {
+        const info = await transporter.sendMail({
+          from: mailFrom,
+          to: mailTo,
+          subject: `Ops Scale — New Inquiry from ${cleaned.name}`,
+          replyTo: cleaned.email,
+          html
+        });
+        console.log('[mail] sent', { id: info.messageId, accepted: info.accepted, rejected: info.rejected });
+        mailed = true;
+      } catch (e) {
+        console.error('[mail] send failed:', e.message);
+      }
     }
 
-    return res.json({ success: true, saved, id, mailed: Boolean(transporter) });
+    return res.json({ success: true, saved, id, mailed });
   } catch (err) {
     console.error('[api/contact] error:', err);
     return res.status(500).json({ success: false, error: 'Server error.' });
