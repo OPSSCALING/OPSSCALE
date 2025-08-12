@@ -24,16 +24,21 @@ if (process.env.SENDGRID_SMTP_PASS) {
   transporter = nodemailer.createTransport({
     host: process.env.SENDGRID_SMTP_HOST || 'smtp.sendgrid.net',
     port: Number(process.env.SENDGRID_SMTP_PORT || 587),
-    secure: String(process.env.SENDGRID_SMTP_PORT || '587') === '465',
+    secure: false, // STARTTLS on 587
     auth: {
       user: process.env.SENDGRID_SMTP_USER || 'apikey',
-      pass: process.env.SENDGRID_SMTP_PASS
+      pass: process.env.SENDGRID_SMTP_PASS,
+    },
+    logger: true,
+    debug: true,
+  });
+  transporter.verify((err, success) => {
+    if (err) {
+      console.error('[mail] transporter.verify failed:', err.message);
+    } else {
+      console.log('[mail] transporter ready');
     }
   });
-  console.log('[mail] SMTP transporter ready (host=%s port=%s secure=%s)',
-    process.env.SENDGRID_SMTP_HOST || 'smtp.sendgrid.net',
-    String(process.env.SENDGRID_SMTP_PORT || 587),
-    String(process.env.SENDGRID_SMTP_PORT || '587') === '465');
 } else {
   console.warn('[mail] SENDGRID_SMTP_PASS not set — email notifications disabled');
 }
@@ -109,65 +114,73 @@ async function connectDB() {
 }
 
 // ---------- API ----------
+async function sendContactEmail(doc) {
+  const from = process.env.MAIL_FROM || 'Ops Scale <noreply@opsscale.tech>';
+  const to = process.env.MAIL_TO || 'opsscaletech@gmail.com';
+  const subject = `New inquiry from ${doc.name}`;
+
+  const html = `
+    <h2>New Contact Submission</h2>
+    <p><strong>Name:</strong> ${doc.name}</p>
+    <p><strong>Email:</strong> ${doc.email}</p>
+    <p><strong>Message:</strong><br/>${doc.message || ''}</p>
+    <p><small>IP: ${doc.ip || ''}</small></p>
+  `;
+
+  const info = await transporter.sendMail({
+    from,
+    to,
+    subject,
+    html,
+  });
+  console.log('[mail] sendMail accepted, id:', info.messageId);
+  return info;
+}
+
 app.post('/api/contact', async (req, res) => {
   try {
-    const { name, email, message, company } = req.body || {};
-    if (company) return res.status(200).json({ success: true }); // honeypot
-
-    const cleaned = {
-      name: String(name || '').trim(),
-      email: String(email || '').trim(),
-      message: String(message || '').trim(),
-      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
-    };
-
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleaned.email);
-    if (!cleaned.name || !emailOk || !cleaned.message) {
-      return res.status(400).json({ success: false, error: 'Invalid input.' });
+    const { name, email, message } = req.body || {};
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, error: 'Missing required fields' });
     }
 
-    // Save if DB is available
-    let saved = false;
-    let id = null;
-    if (dbReady && Contact) {
-      const doc = await Contact.create(cleaned);
-      saved = true;
-      id = doc._id;
-    }
+    const doc = new Contact({
+      name,
+      email,
+      message,
+      ip: req.ip,
+      createdAt: new Date(),
+    });
 
-    // Email if mail is available
+    await doc.save();
+
     let mailed = false;
-    if (transporter) {
-      const mailFrom = process.env.MAIL_FROM || 'Ops Scale <noreply@opsscale.tech>';
-      const mailTo = process.env.MAIL_TO || 'you@example.com';
-      const html = `
-        <div style="font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;color:#0f172a">
-          <h2 style="margin:0 0 8px">New Ops Scale inquiry</h2>
-          <p style="margin:0 0 6px"><strong>Name:</strong> ${cleaned.name}</p>
-          <p style="margin:0 0 6px"><strong>Email:</strong> ${cleaned.email}</p>
-          <p style="margin:12px 0 6px"><strong>Message:</strong></p>
-          <div style="white-space:pre-wrap;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px">${cleaned.message}</div>
-          ${id ? `<p style="margin:12px 0 0;color:#475569">Saved as #${id}</p>` : ''}
-        </div>`;
-      try {
-        const info = await transporter.sendMail({
-          from: mailFrom,
-          to: mailTo,
-          subject: `Ops Scale — New Inquiry from ${cleaned.name}`,
-          replyTo: cleaned.email,
-          html
-        });
-        console.log('[mail] sent', { id: info.messageId, accepted: info.accepted, rejected: info.rejected });
-        mailed = true;
-      } catch (e) {
-        console.error('[mail] send failed:', e.message);
-      }
+    try {
+      const info = await sendContactEmail(doc);
+      mailed = Boolean(info && info.accepted && info.accepted.length);
+    } catch (e) {
+      console.error('[mail] sendContactEmail error:', e.message);
     }
 
-    return res.json({ success: true, saved, id, mailed });
+    return res.json({ success: true, saved: true, id: String(doc._id), mailed });
   } catch (err) {
-    console.error('[api/contact] error:', err);
-    return res.status(500).json({ success: false, error: 'Server error.' });
+    console.error('[api] /api/contact error:', err);
+    return res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+app.get('/api/mail/test', async (_req, res) => {
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.MAIL_FROM || 'Ops Scale <noreply@opsscale.tech>',
+      to: process.env.MAIL_TO || 'opsscaletech@gmail.com',
+      subject: 'Ops Scale SMTP test',
+      text: 'This is a test email from Render via SendGrid SMTP.',
+    });
+    res.json({ ok: true, messageId: info.messageId, accepted: info.accepted });
+  } catch (e) {
+    console.error('[mail] /api/mail/test failed:', e);
+    res.status(500).json({ ok: false, error: e.message });
   }
 });
 
@@ -175,9 +188,11 @@ app.post('/api/contact', async (req, res) => {
 app.get('/', (_req, res) =>
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
 );
-app.get('/health', (_req, res) =>
-  res.json({ ok: true, db: dbReady, mail: Boolean(transporter) })
-);
+app.get('/health', (_req, res) => {
+  const dbReadyNow = mongoose && mongoose.connection && mongoose.connection.readyState === 1;
+  const mailReady = Boolean(process.env.SENDGRID_SMTP_PASS);
+  res.json({ ok: true, db: dbReadyNow, mail: mailReady });
+});
 
 // ---------- Start ----------
 (async () => {
