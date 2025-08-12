@@ -354,12 +354,6 @@
         .grid-2 {
           grid-template-columns: 1fr;
         }
-        .nav-links {
-          display: none;
-        }
-        .mobile-toggle {
-          display: inline-flex;
-        }
         .cols {
           grid-template-columns: 1fr;
         }
@@ -445,8 +439,32 @@
       .backdrop.show { opacity: 1; pointer-events: auto; }
 
       @media (max-width: 960px) {
-        .primary-nav { display: none; }
-        .hamburger { display: inline-flex; }
+        /* Make header wrap and keep the menu visible on mobile */
+        .site-header .bar { height: auto; padding: 8px 0; flex-wrap: wrap; align-items: flex-start; }
+
+        /* Show the nav inline as a horizontal, scrollable pill row */
+        .primary-nav {
+          display: flex; /* keep visible on mobile */
+          order: 2; /* place below brand */
+          width: 100%;
+          gap: .75rem;
+          padding: 8px 0 10px;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: thin;
+        }
+        .primary-nav a {
+          display: inline-block;
+          padding: 6px 10px;
+          border: 1px solid #e2e8f0;
+          border-radius: 999px;
+          background: #fff;
+          white-space: nowrap;
+        }
+
+        /* Hide hamburger/drawer on small screens since nav is visible */
+        .hamburger { display: none; }
+        #drawer, #backdrop { display: none !important; }
       }
     </style>
   </head>
