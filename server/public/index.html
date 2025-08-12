@@ -401,26 +401,67 @@
         flex-wrap: wrap;
         gap: 0.5rem;
       }
+
+      /* --- Mobile-first header & drawer --- */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: saturate(180%) blur(10px);
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .site-header .bar {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .site-header .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+      .site-header .brand-wrap img { height: 36px; width: auto; }
+      .site-header .brand-text { line-height: 1; }
+      .site-header .brand-eyebrow { font-size: .78rem; color: #64748b; }
+
+      /* Desktop nav remains inline */
+      .primary-nav { display: flex; gap: 1.1rem; align-items: center; }
+      .primary-nav a { font-weight: 600; color: var(--ink); }
+
+      /* Mobile hamburger */
+      .hamburger { display: none; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 10px; }
+
+      /* Drawer */
+      .drawer { position: fixed; inset: 0 0 0 auto; width: 78%; max-width: 380px; background: #fff; box-shadow: -12px 0 28px rgba(2,12,27,.18); transform: translateX(100%); transition: transform .25s ease; display: flex; flex-direction: column; }
+      .drawer.open { transform: translateX(0); }
+      .drawer header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #e2e8f0; background: #fff; }
+      .drawer nav { padding: 10px 16px; display: grid; gap: 10px; }
+      .drawer nav a { padding: 10px 12px; border-radius: 10px; border: 1px solid #e2e8f0; }
+      .backdrop { position: fixed; inset: 0; background: rgba(2,6,23,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+      .backdrop.show { opacity: 1; pointer-events: auto; }
+
+      @media (max-width: 960px) {
+        .primary-nav { display: none; }
+        .hamburger { display: inline-flex; }
+      }
     </style>
   </head>
   <body>
     <!-- Header -->
-    <header>
-      <div class="container nav" role="navigation" aria-label="Primary">
-        <a class="brand" href="#top" aria-label="Ops Scale Home">
-          <img
-            src="/logos/2OFCOpsScaleLogo.svg"
-            alt="Ops Scale logo icon"
-            style="height: 40px; width: auto"
-          />
-          <div>
-            <div style="font-size: 1rem; line-height: 1"></div>
-            <div class="muted" style="font-size: 0.8rem; line-height: 1">
-              Media • Tech • Operations
-            </div>
+    <header class="site-header">
+      <div class="container bar" role="navigation" aria-label="Primary">
+        <a class="brand-wrap" href="#top" aria-label="Ops Scale Home">
+          <img src="/logos/2OFCOpsScaleLogo.svg" alt="Ops Scale logo" />
+          <div class="brand-text">
+            <div class="brand-eyebrow">Media • Tech • Operations</div>
           </div>
         </a>
-        <nav class="nav-links" aria-label="Site">
+
+        <nav class="primary-nav" aria-label="Site">
           <a href="#services">Services</a>
           <a href="#ai">AI</a>
           <a href="#industries">Industries</a>
@@ -428,27 +469,26 @@
           <a href="#approach">Approach</a>
           <a href="#contact">Contact</a>
         </nav>
-        <button
-          id="mobileBtn"
-          class="mobile-toggle btn btn-outline"
-          aria-expanded="false"
-          aria-controls="mobileMenu"
-        >
-          Menu
-        </button>
+
+        <button id="hamburger" class="hamburger btn btn-outline" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">Menu</button>
       </div>
-      <div id="mobileMenu" class="container" hidden>
-        <nav
-          class="card"
-          style="margin: 10px 0; padding: 12px"
-          aria-label="Mobile"
-        >
-          <a href="#services">Services</a> · <a href="#ai">AI</a> ·
-          <a href="#industries">Industries</a> ·
-          <a href="#work">Case Studies</a> · <a href="#approach">Approach</a> ·
+
+      <!-- Drawer for mobile -->
+      <div id="backdrop" class="backdrop" hidden></div>
+      <aside id="drawer" class="drawer" aria-hidden="true">
+        <header>
+          <strong>Menu</strong>
+          <button id="closeDrawer" class="btn btn-outline" aria-label="Close menu">Close</button>
+        </header>
+        <nav aria-label="Mobile">
+          <a href="#services">Services</a>
+          <a href="#ai">AI</a>
+          <a href="#industries">Industries</a>
+          <a href="#work">Case Studies</a>
+          <a href="#approach">Approach</a>
           <a href="#contact">Contact</a>
         </nav>
-      </div>
+      </aside>
     </header>
 
     <!-- Hero -->
@@ -947,7 +987,7 @@
         <div>
           <h4>Contact</h4>
           <a href="mailto:opsscaletech@gmail.com">Email</a><br />
-          
+
           <a href="https://opsscale.tech" target="_blank" rel="noopener"
             >opsscale.tech</a
           >
@@ -956,19 +996,35 @@
     </footer>
 
     <script>
-      // Mobile menu toggle
-      const btn = document.getElementById("mobileBtn");
-      const menu = document.getElementById("mobileMenu");
-      btn?.addEventListener("click", () => {
-        const open = menu.hasAttribute("hidden") ? false : true;
-        if (open) {
-          menu.setAttribute("hidden", "");
-          btn.setAttribute("aria-expanded", "false");
-        } else {
-          menu.removeAttribute("hidden");
-          btn.setAttribute("aria-expanded", "true");
+      // Mobile drawer menu
+      (function () {
+        const btn = document.getElementById('hamburger');
+        const drawer = document.getElementById('drawer');
+        const closeBtn = document.getElementById('closeDrawer');
+        const backdrop = document.getElementById('backdrop');
+
+        function openDrawer() {
+          drawer.classList.add('open');
+          drawer.setAttribute('aria-hidden', 'false');
+          btn.setAttribute('aria-expanded', 'true');
+          backdrop.removeAttribute('hidden');
+          backdrop.classList.add('show');
         }
-      });
+        function closeDrawer() {
+          drawer.classList.remove('open');
+          drawer.setAttribute('aria-hidden', 'true');
+          btn.setAttribute('aria-expanded', 'false');
+          backdrop.classList.remove('show');
+          backdrop.setAttribute('hidden', '');
+        }
+
+        btn?.addEventListener('click', openDrawer);
+        closeBtn?.addEventListener('click', closeDrawer);
+        backdrop?.addEventListener('click', closeDrawer);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeDrawer();
+        });
+      })();
 
       // Contact form -> POST to backend and show status
       (function () {
