@@ -451,20 +451,34 @@
         .site-header .brand-wrap img { height: 30px; width: auto; }
         .site-header .brand-eyebrow { display: none; }
 
-        /* Center the nav on mobile and allow 2-line wrap without overflow */
+        /* Single-row, horizontally scrollable pill nav */
         .primary-nav {
-          display: flex;           /* visible */
-          order: 2;                /* under brand */
+          order: 2;                    /* below brand */
           width: 100%;
-          justify-content: center; /* centered pills */
+          display: flex;
+          align-items: center;
           gap: .5rem;
           padding: 6px 0 2px;
-          flex-wrap: wrap;         /* wrap instead of horizontal scroll */
-          overflow: visible;       /* prevent hidden overflow */
+
+          /* key: single line + scroll */
+          flex-wrap: nowrap;           /* no wrapping */
+          overflow-x: auto;            /* horizontal scroll when needed */
+          overflow-y: hidden;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch; /* momentum scroll on iOS */
+
+          /* soft fade edges */
+          mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
         }
+        .primary-nav::-webkit-scrollbar { height: 0; }  /* hide scrollbar on WebKit */
+        .primary-nav {
+          scrollbar-width: none;       /* hide on Firefox */
+        }
+
         .primary-nav a {
           display: inline-block;
-          padding: 6px 12px;       /* compact pill */
+          padding: 6px 12px;
           font-size: .9rem;
           line-height: 1.1;
           border: 1px solid #dbe3ee;
@@ -474,12 +488,10 @@
           white-space: nowrap;
         }
 
-        /* Hero spacing so content doesn’t collide with sticky header on small screens */
-        .hero { padding: 52px 0 20px; }
-
-        /* Hide drawer on small since nav is inline */
         .hamburger { display: none; }
         #drawer, #backdrop { display: none !important; }
+
+        .hero { padding: 52px 0 20px; }
       }
 
       @media (max-width: 420px) {
