@@ -418,25 +418,83 @@
         gap: 10px;
         min-width: 0;
       }
-      .site-header .brand-wrap img { height: 32px; width: auto; }
-      .site-header .brand-text { line-height: 1; }
-      .site-header .brand-eyebrow { font-size: .78rem; color: #64748b; }
+      .site-header .brand-wrap img {
+        height: 32px;
+        width: auto;
+      }
+      .site-header .brand-text {
+        line-height: 1;
+      }
+      .site-header .brand-eyebrow {
+        font-size: 0.78rem;
+        color: #64748b;
+      }
 
       /* Desktop nav remains inline */
-      .primary-nav { display: flex; gap: 1.1rem; align-items: center; }
-      .primary-nav a { font-weight: 600; color: var(--ink); }
+      .primary-nav {
+        display: flex;
+        gap: 1.1rem;
+        align-items: center;
+      }
+      .primary-nav a {
+        font-weight: 600;
+        color: var(--ink);
+      }
 
       /* Mobile hamburger */
-      .hamburger { display: none; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 10px; }
+      .hamburger {
+        display: none;
+        border: 1px solid #cbd5e1;
+        padding: 8px 12px;
+        border-radius: 10px;
+      }
 
       /* Drawer */
-      .drawer { position: fixed; inset: 0 0 0 auto; width: 78%; max-width: 380px; background: #fff; box-shadow: -12px 0 28px rgba(2,12,27,.18); transform: translateX(100%); transition: transform .25s ease; display: flex; flex-direction: column; }
-      .drawer.open { transform: translateX(0); }
-      .drawer header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #e2e8f0; background: #fff; }
-      .drawer nav { padding: 10px 16px; display: grid; gap: 10px; }
-      .drawer nav a { padding: 10px 12px; border-radius: 10px; border: 1px solid #e2e8f0; }
-      .backdrop { position: fixed; inset: 0; background: rgba(2,6,23,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
-      .backdrop.show { opacity: 1; pointer-events: auto; }
+      .drawer {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: 78%;
+        max-width: 380px;
+        background: #fff;
+        box-shadow: -12px 0 28px rgba(2, 12, 27, 0.18);
+        transform: translateX(100%);
+        transition: transform 0.25s ease;
+        display: flex;
+        flex-direction: column;
+      }
+      .drawer.open {
+        transform: translateX(0);
+      }
+      .drawer header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid #e2e8f0;
+        background: #fff;
+      }
+      .drawer nav {
+        padding: 10px 16px;
+        display: grid;
+        gap: 10px;
+      }
+      .drawer nav a {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+      }
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      .backdrop.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
 
       @media (max-width: 960px) {
         /* Header layout & spacing */
@@ -447,59 +505,98 @@
           align-items: center;
           gap: 8px;
         }
-        .site-header .brand-wrap { flex: 0 0 auto; }
-        .site-header .brand-wrap img { height: 30px; width: auto; }
-        .site-header .brand-eyebrow { display: none; }
+        .site-header .brand-wrap {
+          flex: 0 0 auto;
+        }
+        .site-header .brand-wrap img {
+          height: 30px;
+          width: auto;
+        }
+        .site-header .brand-eyebrow {
+          display: none;
+        }
 
         /* Single-row, horizontally scrollable pill nav */
         .primary-nav {
-          order: 2;                    /* below brand */
+          order: 2; /* below brand */
           width: 100%;
           display: flex;
           align-items: center;
-          gap: .5rem;
+          gap: 0.5rem;
           padding: 6px 0 2px;
 
           /* key: single line + scroll */
-          flex-wrap: nowrap;           /* no wrapping */
-          overflow-x: auto;            /* horizontal scroll when needed */
+          flex-wrap: nowrap; /* no wrapping */
+          overflow-x: auto; /* horizontal scroll when needed */
           overflow-y: hidden;
           white-space: nowrap;
           -webkit-overflow-scrolling: touch; /* momentum scroll on iOS */
 
           /* soft fade edges */
-          mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
-          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+          mask-image: linear-gradient(
+            90deg,
+            transparent 0,
+            #000 16px,
+            #000 calc(100% - 16px),
+            transparent 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            90deg,
+            transparent 0,
+            #000 16px,
+            #000 calc(100% - 16px),
+            transparent 100%
+          );
         }
-        .primary-nav::-webkit-scrollbar { height: 0; }  /* hide scrollbar on WebKit */
+        .primary-nav::-webkit-scrollbar {
+          height: 0;
+        } /* hide scrollbar on WebKit */
         .primary-nav {
-          scrollbar-width: none;       /* hide on Firefox */
+          scrollbar-width: none; /* hide on Firefox */
         }
 
         .primary-nav a {
           display: inline-block;
           padding: 6px 12px;
-          font-size: .9rem;
+          font-size: 0.9rem;
           line-height: 1.1;
           border: 1px solid #dbe3ee;
           border-radius: 999px;
           background: #fff;
-          box-shadow: 0 1px 0 rgba(2,12,27,.04);
+          box-shadow: 0 1px 0 rgba(2, 12, 27, 0.04);
           white-space: nowrap;
         }
 
-        .hamburger { display: none; }
-        #drawer, #backdrop { display: none !important; }
+        .hamburger {
+          display: none;
+        }
+        #drawer,
+        #backdrop {
+          display: none !important;
+        }
 
-        .hero { padding: 52px 0 20px; }
+        .hero {
+          padding: 52px 0 20px;
+        }
       }
 
       @media (max-width: 420px) {
-        .primary-nav { gap: .4rem; }
-        .primary-nav a { padding: 5px 10px; font-size: .86rem; }
-        .site-header .brand-wrap img { height: 28px; }
-        .container { padding: 0 14px; }
-        h1 { font-size: clamp(1.7rem, 6.2vw, 2.1rem); }
+        .primary-nav {
+          gap: 0.4rem;
+        }
+        .primary-nav a {
+          padding: 5px 10px;
+          font-size: 0.86rem;
+        }
+        .site-header .brand-wrap img {
+          height: 28px;
+        }
+        .container {
+          padding: 0 14px;
+        }
+        h1 {
+          font-size: clamp(1.7rem, 6.2vw, 2.1rem);
+        }
       }
     </style>
   </head>
@@ -523,7 +620,15 @@
           <a href="#contact">Contact</a>
         </nav>
 
-        <button id="hamburger" class="hamburger btn btn-outline" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">Menu</button>
+        <button
+          id="hamburger"
+          class="hamburger btn btn-outline"
+          aria-expanded="false"
+          aria-controls="drawer"
+          aria-label="Open menu"
+        >
+          Menu
+        </button>
       </div>
 
       <!-- Drawer for mobile -->
@@ -531,7 +636,13 @@
       <aside id="drawer" class="drawer" aria-hidden="true">
         <header>
           <strong>Menu</strong>
-          <button id="closeDrawer" class="btn btn-outline" aria-label="Close menu">Close</button>
+          <button
+            id="closeDrawer"
+            class="btn btn-outline"
+            aria-label="Close menu"
+          >
+            Close
+          </button>
         </header>
         <nav aria-label="Mobile">
           <a href="#services">Services</a>
@@ -807,7 +918,7 @@
           <article class="case">
             <div class="thumb">
               <img
-                src="/cases/manufacturing.jpg"
+                src="/server/public/logos/Assembly.png"
                 alt="Manufacturing line"
                 style="width: 100%; display: block"
               />
@@ -1051,31 +1162,31 @@
     <script>
       // Mobile drawer menu
       (function () {
-        const btn = document.getElementById('hamburger');
-        const drawer = document.getElementById('drawer');
-        const closeBtn = document.getElementById('closeDrawer');
-        const backdrop = document.getElementById('backdrop');
+        const btn = document.getElementById("hamburger");
+        const drawer = document.getElementById("drawer");
+        const closeBtn = document.getElementById("closeDrawer");
+        const backdrop = document.getElementById("backdrop");
 
         function openDrawer() {
-          drawer.classList.add('open');
-          drawer.setAttribute('aria-hidden', 'false');
-          btn.setAttribute('aria-expanded', 'true');
-          backdrop.removeAttribute('hidden');
-          backdrop.classList.add('show');
+          drawer.classList.add("open");
+          drawer.setAttribute("aria-hidden", "false");
+          btn.setAttribute("aria-expanded", "true");
+          backdrop.removeAttribute("hidden");
+          backdrop.classList.add("show");
         }
         function closeDrawer() {
-          drawer.classList.remove('open');
-          drawer.setAttribute('aria-hidden', 'true');
-          btn.setAttribute('aria-expanded', 'false');
-          backdrop.classList.remove('show');
-          backdrop.setAttribute('hidden', '');
+          drawer.classList.remove("open");
+          drawer.setAttribute("aria-hidden", "true");
+          btn.setAttribute("aria-expanded", "false");
+          backdrop.classList.remove("show");
+          backdrop.setAttribute("hidden", "");
         }
 
-        btn?.addEventListener('click', openDrawer);
-        closeBtn?.addEventListener('click', closeDrawer);
-        backdrop?.addEventListener('click', closeDrawer);
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') closeDrawer();
+        btn?.addEventListener("click", openDrawer);
+        closeBtn?.addEventListener("click", closeDrawer);
+        backdrop?.addEventListener("click", closeDrawer);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeDrawer();
         });
       })();
 
