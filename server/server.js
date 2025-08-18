@@ -86,6 +86,10 @@ checkEnv({ hasUploadRoute: Boolean(uploadRoute) });
 
 // Serve static assets from /public (HTML/CSS/JS live here)
 app.use(express.static(path.join(__dirname, 'public')));
+// Explicit mounts for common subfolders (helps if absolute paths are used in HTML)
+app.use('/cases', express.static(path.join(__dirname, 'public', 'cases')));
+app.use('/logos', express.static(path.join(__dirname, 'public', 'logos')));
+app.use('/videos', express.static(path.join(__dirname, 'public', 'videos')));
 
 const PORT = Number(process.env.PORT || 3000);
 
